@@ -1,6 +1,7 @@
-import exress from "express";
-import {protect} from "../middleware/authMiddleware.js"
+import express from "express"; // Fixed spelling
+import { protect } from "../middleware/authMiddleware.js";
 import { registerHotel } from "../controllers/hotelController.js";
-const hotelRouter = exress.Router();
+
+const hotelRouter = express.Router();
 hotelRouter.post("/", protect, registerHotel);
-export default hotelRouter
+export default hotelRouter;
