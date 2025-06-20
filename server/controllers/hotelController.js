@@ -25,10 +25,10 @@ import User from "../models/User.js";
 
 export const registerHotel = async (req, res) => {
   try {
-    // ✅ SAFETY CHECK for req.user
-    if (!req.user || !req.user._id) {
-      return res.status(401).json({ success: false, message: "Unauthorized: User not found in request" });
-    }
+    // // ✅ SAFETY CHECK for req.user
+    // if (!req.user || !req.user._id) {
+    //   return res.status(401).json({ success: false, message: "Unauthorized: User not found in request" });
+    // }
 
     const { name, address, contact, city } = req.body;
     const owner = req.user._id;
@@ -39,7 +39,7 @@ export const registerHotel = async (req, res) => {
       return res.json({ success: false, message: "Hotel Already Registered" });
     }
 
-    await Hotel.create({ name, address, contact, owner, city });
+    await Hotel.create({ name, address, contact, city, owner });
     await User.findByIdAndUpdate(owner, { role: "hotelOwner" });
 
     res.json({ success: true, message: "Hotel Registered Successfully" });

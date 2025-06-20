@@ -1,4 +1,6 @@
 import Booking from "../models/Booking.js";
+import Hotel from "../models/Hotel.js";
+import Room from "../models/Rooms.js";
 //Function to check Availability of Room
 const CheckAvailability = async ({checkInDate, checkOutDate, room} ) => {
     try{
@@ -13,7 +15,7 @@ const CheckAvailability = async ({checkInDate, checkOutDate, room} ) => {
 //POST /api/booking/check-availability
 export const checkAvailabilityAPI = async (req, res) => {
     try{
-        const {checkInDate, checkOutDate, room} = req.body;
+        const {room, checkInDate, checkOutDate} = req.body;
         const isAvailable = await CheckAvailability({checkInDate, checkOutDate, room});
         res.json({success: true, isAvailable});
     }catch(error){
@@ -65,7 +67,7 @@ export const getUserBookings =  async (req, res) => {
 }
 export const getHotelBookings = async (req, res) => {
     try{
-        const hotel =  await Hotel.findOne({owner: req.user._id});
+        const hotel =  await Hotel.findOne({owner: req.auth.userId});
          if(!hotel){ return res.json({success: false, message: "Hotel not found"});
 }
 const bookings = await Booking.find({hotel: hotel._id}).populate('room hotel user').sort({createdAt: -1});

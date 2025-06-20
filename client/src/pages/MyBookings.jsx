@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Title from "../components/Title";
 import { assets, userBookingsDummyData } from "../assets/assets";

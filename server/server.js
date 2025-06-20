@@ -12,7 +12,7 @@ import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 dotenv.config()
 connectDB()
-connectCloudinary()
+connectCloudinary();
 const app= express()
 app.use(cors())
 //Middleware
@@ -22,8 +22,8 @@ app.use(clerkMiddleware())
 app.use("/api/clerk", clerkWebHooks)
 app.get('/',(req,res)=> res.send("API is working "))
 app.use('/api/user', userRouter)
-app.use('/api/hotels', hotelRouter )
+app.use('/api/hotels', hotelRouter)
 app.use('/api/rooms', roomRouter)
-app.use('/api/booking', bookingRouter)
+app.use('/api/bookings', bookingRouter)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=> console.log(`Server is running on port ${PORT}`));
