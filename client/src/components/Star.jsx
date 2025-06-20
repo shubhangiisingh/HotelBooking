@@ -12,3 +12,22 @@ const Star = ({rating =4}) => {
 }
 
 export default Star
+// import React from 'react';
+// import { assets } from '../assets/assets'; // Assuming star icon is here
+
+// const Star = ({ count = 5 }) => {
+//   return (
+//     <div className="flex">
+//       {[...Array(count)].map((_, index) => (
+//         <img
+//           key={index}
+//           src={assets.starIcon} // Make sure this is correctly imported
+//           alt="star"
+//           className="w-4 h-4"
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default Star;
