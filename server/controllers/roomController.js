@@ -1,6 +1,7 @@
 import Hotel from '../models/Hotel.js'
 import {v2 as cloudinary } from "cloudinary";
 import Room from '../models/Rooms.js'
+
 //API to create a new room for a hotel
 export const createRoom = async (req, res) => {
     try{
@@ -39,15 +40,26 @@ export const getRooms = async (req, res) => {
     }
 
 //API to get all rooms for a specific hotel
+
 export const getOwnerRooms = async (req, res) => {
-    try{
-        const hotelData = await Hotel({owner: req.auth.userId})
-        const rooms = await Room.find({hotel: hotelData._id.toString()}).populate('hotel');
-        res.json({success: true, rooms});
-    } catch(error){
-        res.json({success: false, message: error.message})
+  try {
+    const userId = req.userId; // ✅ Passed from middleware
+
+    const hotelData = await Hotel.findOne({ owner: userId });
+
+    if (!hotelData) {
+      return res.status(404).json({ success: false, message: 'Hotel not found for this owner' });
     }
-}
+
+    const rooms = await Room.find({ hotel: hotelData._id.toString() }).populate('hotel');
+
+    res.json({ success: true, rooms });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
 //API to toggle availability for a specific hotel
 export const toggleRoomAvalibility = async (req, res) => {
  try{
